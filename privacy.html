@@ -375,8 +375,9 @@
       <article id="policy" class="policy">
         <section class="summary" aria-labelledby="summary-title">
           <p class="summary-label">At a glance</p>
-          <p id="summary-title">PicDrop runs locally in your browser—without analytics, advertising, accounts, a backend service, or third-party APIs.</p>
+          <p id="summary-title">PicDrop runs locally in the user&#39;s browser. It does not include analytics, advertising, accounts, a backend service, or third-party APIs.</p>
         </section>
+        <p>Applies to PicDrop <strong>1.4.1</strong>. Updated October 7, 2026.</p>
 
         <section id="data" class="policy-section" aria-labelledby="data-title">
           <p class="section-number" aria-hidden="true">01</p>
@@ -384,8 +385,13 @@
             <h2 id="data-title">Data handled</h2>
             <ul class="fact-list">
               <li>Image URLs are read from the webpage only when needed to resolve and download an image.</li>
-              <li>Download preferences and custom categories are stored with <code>chrome.storage.sync</code>. Chrome may synchronize these settings between browsers signed into the same Google account.</li>
+              <li>While the download toolbar is active, PicDrop tracks the selected image component and rechecks its source before a click starts a download. Target references and source snapshots are held in memory and are not saved to extension settings.</li>
+              <li>The extension&#39;s enabled state, download folder, custom categories, toolbar position, and UI collision avoidance setting are stored with <code>chrome.storage.sync</code>. Chrome may synchronize these settings between browsers signed into the same Google account. Custom icon images are stored separately and do not synchronize with these settings.</li>
+              <li>Custom icon images uploaded by the user are resized to 96 px and stored only on this device with <code>chrome.storage.local</code>. They are not synchronized or uploaded anywhere.</li>
+              <li>Settings backups are created only when the user clicks &quot;Export settings&quot;. The <code>.json</code> file contains the saved download folder, categories, toolbar position, UI collision avoidance setting, and custom icons. Unsaved edits and the extension&#39;s overall enabled state are excluded. The file is saved to the user&#39;s computer and is never uploaded by PicDrop. Importing reads only the file the user selects and asks for confirmation before replacing the settings and custom icons covered by the backup. A backup can transfer custom icons to another computer.</li>
               <li>Downloads are initiated through the Chrome Downloads API.</li>
+              <li>For HTTP/HTTPS image URLs on the current page&#39;s origin without a recognizable image extension or format parameter, a click can retrieve the image in the content script using browser-managed credentials. Redirects are rejected. PicDrop does not read cookies, passwords, or authentication tokens. The response must have a supported image MIME type and decode as an image before it is downloaded.</li>
+              <li>Retrieved image bytes and their source URL are temporarily passed to the extension service worker for a local download. The source URL supplies the filename basename; the response image MIME type supplies the extension. PicDrop does not read the response&#39;s <code>Content-Disposition</code> filename or infer a name from query parameters. These bytes and URLs are not stored in extension settings or uploaded to another service.</li>
             </ul>
             <p class="assurance">PicDrop does not transmit browsing history, downloaded images, image URLs, or settings to a server operated by PicDrop.</p>
           </div>
@@ -397,7 +403,7 @@
             <h2 id="permissions-title">Permissions</h2>
             <ul class="fact-list">
               <li><code>downloads</code> starts image downloads and supplies a relative filename.</li>
-              <li><code>storage</code> saves the configured download folder, prompt preference, and up to ten custom categories.</li>
+              <li><code>storage</code> saves the extension&#39;s enabled state, configured download folder, toolbar position, UI collision avoidance setting, up to ten custom categories, and up to twenty custom icons. PicDrop does not offer a Save As prompt preference; image downloads use <code>saveAs: false</code>.</li>
               <li>Static content-script match patterns allow PicDrop to detect images on HTTP and HTTPS pages.</li>
             </ul>
           </div>
@@ -408,6 +414,7 @@
           <div>
             <h2 id="limitations-title">Website limitations</h2>
             <p>PicDrop does not bypass authentication, access controls, paywalls, DRM, or website permissions. Chrome prevents content scripts from running on protected browser pages and the Chrome Web Store.</p>
+            <p>Page retrieval is limited to 5 MiB (5,242,880 bytes) of image data and a 15-second retrieval and validation timeout. It rejects all redirects, including same-origin redirects, and fails without falling back to a direct download if the response is a login page or invalid image. Website authentication, CSP, and request-origin checks may still prevent retrieval. These added limits do not apply to the existing direct URL download flow.</p>
           </div>
         </section>
 
@@ -415,14 +422,15 @@
           <p class="section-number" aria-hidden="true">04</p>
           <div>
             <h2 id="changes-title">Changes</h2>
-            <p>Privacy-impacting changes will be reflected on this page and described in PicDrop’s release notes.</p>
+            <p>Version 1.4.1 adds active image tracking for changing galleries and same-origin page retrieval for image endpoints without a recognizable image extension or format parameter. It uses the existing permissions and adds no dependencies, cookie access permission, analytics, or external upload service.</p>
+            <p>Privacy-impacting changes should update this document and be described in the release notes.</p>
           </div>
         </section>
       </article>
     </div>
 
     <footer>
-      <p><span class="footer-label">PicDrop Privacy</span><br>Effective August 21, 2026</p>
+      <p><span class="footer-label">PicDrop Privacy</span><br>Updated October 7, 2026 · PicDrop 1.4.1</p>
       <p>Plain-text source: <a href="PRIVACY.md">PRIVACY.md</a></p>
     </footer>
   </main>

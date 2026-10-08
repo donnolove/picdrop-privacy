@@ -1,6 +1,6 @@
 # PicDrop Privacy
 
-Applies to PicDrop **1.4.1**. Updated October 7, 2026.
+Applies to PicDrop **1.4.2**. Updated October 8, 2026.
 
 PicDrop runs locally in the user's browser. It does not include analytics, advertising, accounts, a backend service, or third-party APIs.
 
@@ -30,6 +30,8 @@ PicDrop does not bypass authentication, access controls, paywalls, DRM, or websi
 Page retrieval is limited to 5 MiB (5,242,880 bytes) of image data and a 15-second retrieval and validation timeout. It rejects all redirects, including same-origin redirects, and fails without falling back to a direct download if the response is a login page or invalid image. Website authentication, CSP, and request-origin checks may still prevent retrieval. These added limits do not apply to the existing direct URL download flow.
 
 ## Changes
+
+Version 1.4.2 adds category ordering and nine toolbar positions. The saved category array preserves its order in settings backups. These changes use the existing permissions and data storage.
 
 Version 1.4.1 adds active image tracking for changing galleries and same-origin page retrieval for image endpoints without a recognizable image extension or format parameter. It uses the existing permissions and adds no dependencies, cookie access permission, analytics, or external upload service.
 
